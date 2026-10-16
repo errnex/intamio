@@ -1,5 +1,11 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
+import { Bricolage_Grotesque, Instrument_Sans } from 'next/font/google';
+import { Providers } from '@/components/Providers';
+import { FAQS } from './content';
+
+const display = Bricolage_Grotesque({ subsets: ['latin'], variable: '--font-display', display: 'swap' });
+const body = Instrument_Sans({ subsets: ['latin'], variable: '--font-body', display: 'swap' });
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001';
 const title = 'Intamio — Software Manajemen Bisnis Rental & Event dengan Agen AI Telegram';
@@ -16,18 +22,22 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', title, description },
   robots: { index: true, follow: true },
 };
-export const viewport: Viewport = { themeColor: '#2563eb', width: 'device-width', initialScale: 1 };
+export const viewport: Viewport = { themeColor: '#3B6B60', width: 'device-width', initialScale: 1 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = {
     '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'Intamio',
     applicationCategory: 'BusinessApplication', operatingSystem: 'Web, Telegram', description, inLanguage: 'id',
   };
+  const faqLd = {
+    '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: FAQS.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+  };
   return (
-    <html lang="id">
-      <body className="bg-white text-slate-700 antialiased">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        {children}
+    <html lang="id" className={`${display.variable} ${body.variable}`}>
+      <body className="bg-paper font-sans text-ink antialiased">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([jsonLd, faqLd]) }} />
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

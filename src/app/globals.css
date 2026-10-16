@@ -1,11 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html { scroll-behavior: smooth; }
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+@media (prefers-reduced-motion: no-preference) { html:not(.lenis) { scroll-behavior: smooth; } }
+
+@layer base {
+  :focus-visible { @apply outline-none ring-2 ring-sage ring-offset-2 ring-offset-paper; }
+  ::selection { background: #CFE0D9; color: #1C2826; }
+}
 @layer components {
-  .btn { @apply inline-flex items-center justify-center rounded-xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-600; }
-  .btn-outline { @apply inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50; }
-  .section { @apply mx-auto max-w-6xl px-5 py-20; }
-  .eyebrow { @apply text-sm font-semibold uppercase tracking-wider text-brand-600; }
-  .h2 { @apply mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl; }
+  .btn { @apply inline-flex items-center justify-center rounded-full bg-sage px-6 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-sage-dark hover:shadow-[0_10px_24px_-12px_rgba(59,107,96,0.8)] active:translate-y-0; }
+  .btn-quiet { @apply inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-ink ring-1 ring-line transition duration-300 hover:bg-white hover:ring-sage/40; }
+  .h2 { @apply font-display text-3xl font-semibold leading-tight tracking-[-0.02em] text-ink sm:text-[2.6rem]; }
+  .link { @apply relative text-stone transition-colors hover:text-ink after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-sage after:transition-transform after:duration-300 hover:after:scale-x-100; }
 }
